@@ -20,7 +20,7 @@ export const Categories = ({category, expenses, wallets, addExpenses}: Categorie
         <>
             <li key={category.id} className={'categoryItem'} onClick={() => isModalVisible(true)}>
                 <span>{category.title}</span>
-                <span>{totalSum}</span>
+                <span>{totalSum} / {category.limit}</span>
             </li>
             {
                 isVisible && <Expenses

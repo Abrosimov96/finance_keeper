@@ -88,6 +88,7 @@ function App() {
     const [expenses, setExpenses] = useState<CategoryExpenseType>(myExpenses)
     const [isAddRevenueVisible, setIsAddRevenueVisible] = useState(false)
     const [isAddWalletVisible, setIsAddWalletVisible] = useState(false)
+    const [isAddCategoryVisible, setIsAddCategoryVisible] = useState(false)
     const [collapsedStatistic, setCollapsedStatistic] = useState(true)
 
     const revenuesCount = revenues.length
@@ -96,7 +97,7 @@ function App() {
     const availableCash = wallets.reduce((acc, curr) => acc + curr.currentValue, 0)
     let spentCash = 0
 
-    for (const [key, value] of Object.entries(expenses)) {
+    for (const [_, value] of Object.entries(expenses)) {
         spentCash += value.reduce((acc, curr) => acc + curr.value, 0)
     }
 
@@ -121,13 +122,26 @@ function App() {
 
     //BLL WALLET
     const onAddNewWallet = (title: string, currentValue: number) => {
-        debugger
         const newWallet: WalletType = {
             id: v1(),
             title,
             currentValue
         }
         setWallets([newWallet, ...wallets])
+    }
+
+    // BLL CATEGORY
+    const onAddNewCategory = (title: string, limit: number) => {
+        const categoryID = v1()
+        const newCategory: CategoryType = {
+            id: categoryID,
+            title,
+            limit
+        }
+        setCategories([newCategory, ...categories])
+        setExpenses({...expenses,
+            [categoryID]: []
+        })
     }
 
     //BLL EXPENSES
@@ -146,10 +160,13 @@ function App() {
     const showAddWalletForm = (value: boolean) => {
         setIsAddWalletVisible(value)
     }
+    const showAddCategoryForm = (value: boolean) => {
+        setIsAddCategoryVisible(value)
+    }
 
     return (
         <div>
-            { !collapsedStatistic
+            {!collapsedStatistic
                 ? <Statistic
                     revenuesCount={revenuesCount}
                     revenuesCurrentValue={revenuesCurrentValue}
@@ -158,7 +175,8 @@ function App() {
                     spentCash={spentCash}
                     isCollapsed={setCollapsedStatistic}
                 />
-                : <button className={'statisticBtn'} onClick={() => setCollapsedStatistic(false)}>Показать статустику</button>
+                : <button className={'statisticBtn'} onClick={() => setCollapsedStatistic(false)}>Показать
+                    статустику</button>
             }
             <div>
                 <button onClick={() => showAddRevenueForm(true)}>Создать доход</button>
@@ -187,12 +205,21 @@ function App() {
                 }
                 <Wallets wallets={wallets}/>
             </div>
-            <ExpensesCategories
-                categories={categories}
-                expenses={expenses}
-                wallets={wallets}
-                addExpenses={onAddExpenses}
-            />
+            <div>
+                <button onClick={() => showAddCategoryForm(true)}>Создать категорию</button>
+                {
+                    isAddCategoryVisible && <AddForm
+                        callBack={onAddNewCategory}
+                        isModalVisible={showAddCategoryForm}
+                    />
+                }
+                <ExpensesCategories
+                    categories={categories}
+                    expenses={expenses}
+                    wallets={wallets}
+                    addExpenses={onAddExpenses}
+                />
+            </div>
         </div>
     )
 }

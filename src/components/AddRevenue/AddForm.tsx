@@ -18,7 +18,6 @@ export const AddForm = ({callBack, isModalVisible}: AddFormProps) => {
     }
 
     const newValue = () => {
-        debugger
         if (!titleInputValue.trim()) {
             setNewError('Название обязательно!')
         } else {
