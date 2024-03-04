@@ -1,0 +1,44 @@
+
+.modalAddForm{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #317353;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.addForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.addFormLabel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.addForm input {
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #216447;
+    margin-left: 10px;
+}
+
+.addForm input::placeholder{
+    color: #216447;
+}
+
+.error {
+    color: red
+}

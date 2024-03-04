@@ -1,0 +1,14 @@
+.revenueItem {
+    border: 1px solid #317353;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.revenueItem:hover {
+    background-color: #317353;
+}
