@@ -96,7 +96,6 @@ function App() {
     const revenuesMonthlyValue = revenues.reduce((acc, cur) => acc + cur.monthlySalary, 0)
     const availableCash = wallets.reduce((acc, curr) => acc + curr.currentValue, 0)
     let spentCash = 0
-
     for (const [_, value] of Object.entries(expenses)) {
         spentCash += value.reduce((acc, curr) => acc + curr.value, 0)
     }
@@ -111,11 +110,9 @@ function App() {
         }
         setRevenues([newRevenue, ...revenues])
     }
-
     const onDeleteRevenue = (revenueID: string) => {
         setRevenues(revenues.filter(revenue => revenue.id !== revenueID))
     }
-
     const onChangeRevenueTitle = (revenueID: string, title: string) => {
         setRevenues(revenues.map(revenue => revenue.id === revenueID ? {...revenue, title} : revenue))
     }
@@ -129,7 +126,6 @@ function App() {
         }
         setWallets([newWallet, ...wallets])
     }
-
     // BLL CATEGORY
     const onAddNewCategory = (title: string, limit: number) => {
         const categoryID = v1()
@@ -143,6 +139,9 @@ function App() {
             [categoryID]: []
         })
     }
+    const onChangeCategoryTitle = (categoryID: string, title: string) => {
+        setCategories(categories.map(category => category.id === categoryID ? {...category, title} : category))
+    }
 
     //BLL EXPENSES
     const onAddExpenses = (categoryID: string, walletID: string, value: number) => {
@@ -151,6 +150,14 @@ function App() {
             ? {...wallet, currentValue: wallet.currentValue - value}
             : wallet
         ))
+    }
+    const onChangeExpenseValue = (categoryID: string, expenseID: string, value: number) => {
+        setExpenses({...expenses,
+            [categoryID]: expenses[categoryID].map(expense => expense.id === expenseID
+                ? {...expense, value}
+                : expense
+            )
+        })
     }
 
     // UI
@@ -218,6 +225,8 @@ function App() {
                     expenses={expenses}
                     wallets={wallets}
                     addExpenses={onAddExpenses}
+                    changeCategoryTitle={onChangeCategoryTitle}
+                    changeExpenseValue={onChangeExpenseValue}
                 />
             </div>
         </div>

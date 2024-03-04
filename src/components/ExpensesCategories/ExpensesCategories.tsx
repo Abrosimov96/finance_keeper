@@ -7,8 +7,17 @@ type ExpensesCategoriesProps = {
     expenses: CategoryExpenseType
     wallets: WalletType[]
     addExpenses: (categoryID: string, walletID: string, value: number) => void
+    changeCategoryTitle: (categoryID: string, title: string) => void
+    changeExpenseValue: (categoryID: string, expenseID: string, value: number) => void
 };
-export const ExpensesCategories = ({categories, expenses, wallets, addExpenses}: ExpensesCategoriesProps) => {
+export const ExpensesCategories = ({
+                                       categories,
+                                       expenses,
+                                       wallets,
+                                       addExpenses,
+                                       changeCategoryTitle,
+                                       changeExpenseValue
+                                   }: ExpensesCategoriesProps) => {
     return (
         <div>
             <ul className={'exCatList'}>
@@ -19,6 +28,8 @@ export const ExpensesCategories = ({categories, expenses, wallets, addExpenses}:
                         expenses={expenses[category.id]}
                         wallets={wallets}
                         addExpenses={addExpenses}
+                        changeCategoryTitle={changeCategoryTitle}
+                        changeExpenseValue={changeExpenseValue}
                     />)
                 }
             </ul>

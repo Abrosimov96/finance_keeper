@@ -8,8 +8,17 @@ type CategoriesProps = {
     expenses: ExpenseType[]
     wallets: WalletType[]
     addExpenses: (categoryID: string, walletID: string, value: number) => void
+    changeCategoryTitle: (categoryID: string, title: string) => void
+    changeExpenseValue: (categoryID: string, expenseID: string, value: number) => void
 };
-export const Categories = ({category, expenses, wallets, addExpenses}: CategoriesProps) => {
+export const Categories = ({
+                               category,
+                               expenses,
+                               wallets,
+                               addExpenses,
+                               changeCategoryTitle,
+                               changeExpenseValue
+                           }: CategoriesProps) => {
     const [isVisible, setIsVisible] = useState(false)
 
     const isModalVisible = (value: boolean) => {
@@ -20,7 +29,7 @@ export const Categories = ({category, expenses, wallets, addExpenses}: Categorie
         <>
             <li key={category.id} className={'categoryItem'} onClick={() => isModalVisible(true)}>
                 <span>{category.title}</span>
-                <span>{totalSum} / {category.limit}</span>
+                <span>{totalSum} лв. / {category.limit} лв.</span>
             </li>
             {
                 isVisible && <Expenses
@@ -29,6 +38,8 @@ export const Categories = ({category, expenses, wallets, addExpenses}: Categorie
                     expenses={expenses}
                     wallets={wallets}
                     addExpenses={addExpenses}
+                    changeCategoryTitle={changeCategoryTitle}
+                    changeExpenseValue={changeExpenseValue}
                 />
             }
         </>
